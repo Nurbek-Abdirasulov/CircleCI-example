@@ -9,6 +9,14 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
+  say-hello-without-master:
+    docker:
+      - image: cimg/base:stable
+    steps:
+      - checkout
+      - run:
+          name: "Say hello without master"
+          command: "echo Hello, Hello without dev"
 workflows:
   say-hello-workflow:
     jobs:
@@ -16,3 +24,9 @@ workflows:
           filters:
             branches:
               only: master
+  say-nurba:
+    jobs:
+      - say-hello-without-master:
+          filters:
+            branches:
+              ignore: master
