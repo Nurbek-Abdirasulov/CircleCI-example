@@ -12,8 +12,7 @@ jobs:
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello
-        filter:
-         branches:
-          only:
-           - master
+      - say-hello:
+          filters:
+            branches:
+              only: master
