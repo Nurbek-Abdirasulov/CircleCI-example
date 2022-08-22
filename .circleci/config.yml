@@ -1,6 +1,24 @@
 version: 2.1
 
 jobs:
+  build-and-push-docker-image:
+    docker:
+      - image: cimg/go:1.17
+        auth:
+          username: DOCKER_USERNAME
+          password: DOCKER_PASSWORD
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.14
+          docker_layer_caching: true
+      - run: |
+          TAG=0.1.$CIRCLE_BUILD_NUM
+          cd circleci-example
+          docker build -t DOCKER_USERNAME/circleci:$TAG .
+          echo DOCKER_PASSWORD | docker login -u DOCKER_USERNAME --password-stdin
+          docker push DOCKER_USER_NAME/circleci:$TAG
+
   say-hello:
     docker:
       - image: cimg/base:stable
@@ -9,24 +27,25 @@ jobs:
       - run:
           name: "Say hello"
           command: "echo Hello, World!"
-  say-hello-without-master:
-    docker:
-      - image: cimg/base:stable
-    steps:
-      - checkout
-      - run:
-          name: "Say hello without master"
-          command: "echo Hello, Hello without dev"
+#  say-hello-without-master:
+#    docker:
+#      - image: cimg/base:stable
+#    steps:
+#      - checkout
+#      - run:
+#          name: "Say hello without master"
+#          command: "echo Hello, Hello without dev"
 workflows:
   say-hello-workflow:
     jobs:
-      - say-hello:
+      - build-and-push-docker-image:
           filters:
             branches:
               only: master
-  say-nurba:
-    jobs:
-      - say-hello-without-master:
-          filters:
-            branches:
-              ignore: master
+      - say-hello
+#  say-nurba:
+#    jobs:
+#      - say-hello-without-master:
+#          filters:
+#            branches:
+#              ignore: master
