@@ -5,8 +5,8 @@ jobs:
     docker:
       - image: cimg/go:1.17
         auth:
-          username: DOCKER_USERNAME
-          password: DOCKER_PASSWORD
+          username: nurba1713
+          password: nurba1713
     steps:
       - checkout
       - setup_remote_docker:
@@ -15,9 +15,9 @@ jobs:
       - run: |
           TAG=0.1.$CIRCLE_BUILD_NUM
           cd circleci-example
-          docker build -t DOCKER_USERNAME/circleci:$TAG .
-          echo DOCKER_PASSWORD | docker login -u DOCKER_USERNAME --password-stdin
-          docker push DOCKER_USERNAME/circleci:$TAG
+          docker build -t nurba1713/circleci:$TAG .
+          echo nurba1713 | docker login -u nurba1713 --password-stdin
+          docker push  nurba1713/circleci:$TAG
 
   say-hello:
     docker:
@@ -39,8 +39,6 @@ workflows:
   say-hello-workflow:
     jobs:
       - build-and-push-docker-image:
-          context:
-            - NURBEK_CONTEXT
           filters:
             branches:
               only: master
