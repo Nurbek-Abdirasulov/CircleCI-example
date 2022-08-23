@@ -45,7 +45,8 @@ workflows:
             branches:
               only: master
       - publish-to-dockerhub:
-          context: NURBEK-CONTEXT
+          context:
+            - NURBEK_CONTEXT
           requires:
             - build
           filters:
