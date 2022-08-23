@@ -7,7 +7,7 @@ executors:
       - image: circleci/buildpack-deps:stretch
 jobs:
   build-image:
-      executor: docker-publisher
+    executor: docker-publisher
     steps:
       - checkout
       - setup_remote_docker
@@ -23,6 +23,23 @@ jobs:
           docker build -t $IMAGE_NAME:$TAG .
           echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USERNAME --password-stdin
           docker push  $IMAGE_NAME:$TAG
+
+workflows:
+  say-hello-workflow:
+    jobs:
+      - build-image:
+          filters:
+            branches:
+              only: master
+      - build-image-and-push-to-dockerhub:
+          context:
+            - NURBEK_CONTEXT
+          requires:
+            - build-image
+          filters:
+            branches:
+              only: master
+
 #  say-hello:
 #    docker:
 #      - image: cimg/base:stable
@@ -39,21 +56,9 @@ jobs:
 #      - run:
 #          name: "Say hello without master"
 #          command: "echo Hello, Hello without dev"
-workflows:
-  say-hello-workflow:
-    jobs:
-      - build-image:
-          filters:
-            branches:
-              only: master
-      - build-image-and-push-to-dockerhub:
-          context:
-            - NURBEK_CONTEXT
-          requires:
-            - build-image
-          filters:
-            branches:
-              only: master
+
+
+
 #  say-nurba:
 #    jobs:
 #      - say-hello-without-master:
