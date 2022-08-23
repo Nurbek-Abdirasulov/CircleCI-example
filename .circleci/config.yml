@@ -25,6 +25,7 @@ jobs:
           name: Publish Docker Image to Docker Hub
           command: |
             TAG=0.1.$CIRCLE_BUILD_NUM
+            cd CircleCI-example
             docker build -t $IMAGE_NAME:$TAG .
             echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USERNAME --password-stdin
             docker push $IMAGE_NAME:$TAG
