@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   eb: circleci/aws-elastic-beanstalk@2.0.1
+  maven: circleci/maven@1.3.0
 
 executors:
   docker-publisher:
@@ -41,14 +42,14 @@ jobs:
             eb deploy          
   build-and-test:
     docker:
-      - image: mvn/openjdk:17
+      - image: openjdk:17
     steps:
       - checkout
-      -  mvn/install-packages:
-          pkg-manager: mvn
+      -  maven/maven_command:
+           - ./mvnw clean install
       - run:
           name: Run prod
-          command: ./ maven clean install
+          command: ./mvnw clean install
 workflows:
   build-push-workflow:
     jobs:
