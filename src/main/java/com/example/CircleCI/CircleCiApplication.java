@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CircleCiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CircleCiApplication.class, args);
+		SpringApplication.run(CircleCiApplication.class, args)
 	}
 
 	@GetMapping

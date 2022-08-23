@@ -34,7 +34,7 @@ jobs:
       - checkout
       - eb/setup
       - run:
-          name: "Insert Nurba to docker-compose.yml and deploy using eb cli"
+          name: "deploy using eb cli"
           command: |
             sed -i -e "s;%NURBA%;$CIRCLE_BUILD_NUM;g" ./Dockerrun.aws.json
             eb init $AWS_APPLICATION_NAME -r $AWS_DEFAULT_REGION -p docker
