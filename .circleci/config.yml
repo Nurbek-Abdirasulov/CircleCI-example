@@ -17,7 +17,6 @@ jobs:
       - setup_remote_docker
       - run: |
           docker build -t $IMAGE_NAME:0.1.$CIRCLE_BUILD_NUM .
-          docker run -d -p 8000:8080 $IMAGE_NAME:0.1.$CIRCLE_BUILD_NUM
   build-image-and-push-to-dockerhub:
     executor: docker-publisher
     steps:
@@ -40,10 +39,23 @@ jobs:
             sed -i -e "s;%NURBA%;$CIRCLE_BUILD_NUM;g" ./Dockerrun.aws.json
             eb init $AWS_APPLICATION_NAME -r $AWS_DEFAULT_REGION -p docker
             eb deploy          
-
+  build-and-test:
+    docker:
+      - image: mvn/openjdk:17
+    steps:
+      - checkout
+      -  mvn/install-packages:
+          pkg-manager: mvn
+      - run:
+          name: Run prod
+          command: ./ maven clean install
 workflows:
   build-push-workflow:
     jobs:
+      - build-and-test:
+          filters:
+            branches:
+              only: master
       - build-image:
           filters:
             branches:
