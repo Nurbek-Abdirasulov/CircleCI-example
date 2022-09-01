@@ -24,6 +24,10 @@ workflows:
   build:
     jobs:
       - aws-ecr/build-and-push-image:
+          filters:
+            branches:
+              only:
+                -master
           context:
             - NURBEK_CONTEXT
           account-url: AWS_ECR_URL
