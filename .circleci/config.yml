@@ -26,7 +26,7 @@ workflows:
       - aws-ecr/build-and-push-image:
           context:
             - NURBEK_CONTEXT
-          account-url: AWS_ECR_ACCOUNT_URL
+          account-url: AWS_ECR_URL
           create-repo: false
           dockerfile: Dockerfile
           no-output-timeout: 20m
@@ -34,7 +34,7 @@ workflows:
           region: AWS_DEFAULT_REGION
           repo: test-circleci
           skip-when-tags-exist: false
-          tag: $CIRCLE_SHA1
+          tag: 1.0.0.0
 #          filters:
 #            branches:
 #              only:
