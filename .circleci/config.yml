@@ -24,7 +24,7 @@ workflows:
   build:
     jobs:
       - aws-ecr/build-and-push-image:
-          name: "Hello from nurba"
+          name: "build-and-push-image"
           context:
             - NURBEK_CONTEXT
           account-url: AWS_ECR_URL
@@ -44,7 +44,7 @@ workflows:
           context:
             - NURBEK_CONTEXT
           requires:
-            - aws-ecr/build-and-push-image
+            - build-and-push-image
 
 
 
