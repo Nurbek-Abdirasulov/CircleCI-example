@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CircleCiApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CircleCiApplication.class, args)
+		SpringApplication.run(CircleCiApplication.class, args);
 	}
 
 	@GetMapping
@@ -30,6 +30,20 @@ public class CircleCiApplication {
 				                </body>
 				                </html>
 				""";
+
+		/*//{
+//  "AWSEBDockerrunVersion": "1",
+//  "Ports": [
+//    {
+//      "ContainerPort": 8080,
+//      "HostPort": 80
+//    }
+//  ],
+//  "Image": {
+//    "Name": "nurba1713/circleci-example:%NURBA%",
+//    "Update": "true"
+//  }
+//}*/
 	}
 
 }
