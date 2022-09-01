@@ -18,7 +18,7 @@ jobs:
       - run:
           command: |
             sed -i -e "s;%BUILD_NUM%;$CIRCLE_SHA1;g" ./Dockerrun.aws.json
-            cd ./deploy && eb init $AWS_APPLICATION_NAME -r $AWS_DEFAULT_REGION -p docker
+            eb init $AWS_APPLICATION_NAME -r $AWS_DEFAULT_REGION -p docker
             eb deploy -l $CIRCLE_SHA1
 workflows:
   build:
@@ -26,7 +26,7 @@ workflows:
       - aws-ecr/build-and-push-image:
           context:
             - NURBEK_CONTEXT
-          account-url: AWS_ECR_URL
+          account-url: AWS_ECR_UR"
           create-repo: false
           dockerfile: Dockerfile
           no-output-timeout: 20m
