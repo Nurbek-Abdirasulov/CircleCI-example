@@ -24,10 +24,7 @@ workflows:
   build:
     jobs:
       - aws-ecr/build-and-push-image:
-          filters:
-            branches:
-              only:
-                -master
+          name: "Hello from nurba"
           context:
             - NURBEK_CONTEXT
           account-url: AWS_ECR_URL
@@ -39,10 +36,10 @@ workflows:
           repo: test-circleci
           skip-when-tags-exist: false
           tag: $CIRCLE_SHA1
-#          filters:
-#            branches:
-#              only:
-#                - master
+          filters:
+            branches:
+              only:
+                - master
       - deploy-to-eb:
           context:
             - NURBEK_CONTEXT
